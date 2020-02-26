@@ -22,8 +22,13 @@ public:
 
     friend const Matrix operator+(const Matrix& left, const Matrix& right);
     friend const Matrix operator-(const Matrix& left, const Matrix& right);
+
     friend const Matrix operator*(const Matrix& left, const Matrix& right);
+    //friend const Matrix operator*(const vector<double>& left, const vector<double>& right);
     friend const vector<double> operator*(const Matrix& left, const vector<double>& right);
+    friend const Matrix operator*(const Matrix& left, double right);
+    friend const Matrix operator*(double left, const Matrix& right);
+
     const Matrix& operator=(const Matrix& right);
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);

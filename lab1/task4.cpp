@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <iostream>
-#include "matrix.h"
+#include "Matrix/matrix.h"
 #include <cmath>
 
 using namespace std;

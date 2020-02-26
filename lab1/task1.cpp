@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <iostream>
-#include "matrix.h"
+#include "Matrix/matrix.h"
 
 using namespace std;
 

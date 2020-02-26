@@ -63,6 +63,23 @@ const Matrix operator-(const Matrix& left, const Matrix& right){
     return ans;
 }
 
+const Matrix operator*(double left, const Matrix& right){
+    Matrix ans = right;
+    for(int i = 0; i < ans.n_size; ++i){
+        for(int j = 0; j < ans.m_size; ++j){
+            ans[i][j] *= left;
+        }
+    }
+    return ans;
+}
+
+const Matrix operator*(const Matrix& left, double right){
+    return right * left;
+}
+
+
+
+
 const Matrix operator*(const Matrix& left, const Matrix& right){
     if(left.m_size != right.n_size){
         throw "Wrong multiply! Sizes of matrix not equal!";
@@ -85,11 +102,12 @@ const vector<double> operator*(const Matrix& left, const vector<double>& right){
     vector<double> ans(left.n_size, 0.0);
     for(int i = 0; i < left.n_size; ++i){
         for(int j = 0; j < left.m_size; ++j){
-            ans[i] += left[i][j] * right[j];
+            ans[i] += left._matrix[i][j] * right[j];
         }
     }
     return ans;
 }
+
 
 
 int Matrix::get_m() const{
