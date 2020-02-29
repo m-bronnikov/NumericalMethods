@@ -76,6 +76,7 @@ void vector_init(vector<double>& b){
 }
 */
 
+/*
 void matrix_init(Matrix& A){
     A = Matrix(5, 5);
     A[0][0] = -14.0;
@@ -108,7 +109,24 @@ void matrix_init(Matrix& A){
     A[4][3] = 6.0;
     A[4][4] = -7.0;
 }
+*/
 
+int size_init(){
+    int size;
+    cin >> size;
+    return size;
+}
+
+void matrix_init(Matrix& A, int size){
+    A = Matrix(size, size);
+    for(int i = 0; i < size; ++i){
+        for(int j = 0; j < size; ++j){
+            cin >> A[i][j];
+        }
+    }
+}
+
+/*
 void vector_init(vector<double>& b){
     b.resize(5);
     b[0] = -78.0;
@@ -116,6 +134,15 @@ void vector_init(vector<double>& b){
     b[2] = -38.0;
     b[3] = 77.0;
     b[4] = 91.0;
+}
+*/
+
+
+void vector_init(vector<double>& b, int size){
+    b.resize(size);
+    for(int i = 0; i < size; ++i){
+        cin >> b[i];
+    }
 }
 
 
@@ -145,14 +172,14 @@ void race_method(vector<vector<double>>& vec, const vector<double>& b, vector<do
     vector<double> P(b.size()), Q(b.size());
     P[0] = -vec[0][2] / vec[0][1];
     Q[0] = b[0] / vec[0][1];
-    cout << "P[" << 0 << "] = " << P[0] << " Q[" << 0 << "] = " << Q[0] << endl;
+    //cout << "P[" << 0 << "] = " << P[0] << " Q[" << 0 << "] = " << Q[0] << endl;
     for(int i = 1; i < (int)x.size(); ++i){
         double z = (vec[i][1] + vec[i][0] * P[i-1]);
         P[i] = -vec[i][2];
         P[i] /= z;
         Q[i] = (b[i] - vec[i][0] * Q[i - 1]);
         Q[i] /= z;
-        cout << "P[" << i << "] = " << P[i] << " Q[" << i << "] = " << Q[i] << endl;
+        //cout << "P[" << i << "] = " << P[i] << " Q[" << i << "] = " << Q[i] << endl;
     }
     x.back() = Q.back();
     for(int i = x.size() - 2; i >= 0; --i){
@@ -176,9 +203,9 @@ int main(){
     Matrix A;
     vector<double> x, b;
     vector<vector<double>> vec;
-
-    matrix_init(A);
-    vector_init(b);
+    int size = size_init();
+    matrix_init(A, size);
+    vector_init(b, size);
     print_statement(A, b);
 
     if(A.is_three_diagonal()){

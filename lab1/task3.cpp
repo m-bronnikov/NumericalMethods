@@ -71,6 +71,7 @@ void vector_init(vector<double>& b){
 }
 */
 
+/*
 void matrix_init(Matrix& A){
     A = Matrix(4, 4);
     A[0][0] = 26.0;
@@ -100,6 +101,31 @@ void vector_init(vector<double>& b){
     b[1] = -164.0;
     b[2] = 140.0;
     b[3] = -81.0;
+}
+*/
+
+int size_init(){
+    int size;
+    cin >> size;
+    return size;
+}
+
+void matrix_init(Matrix& A, int size){
+    A = Matrix(size, size);
+    for(int i = 0; i < size; ++i){
+        for(int j = 0; j < size; ++j){
+            cin >> A[i][j];
+        }
+    }
+}
+
+
+
+void vector_init(vector<double>& b, int size){
+    b.resize(size);
+    for(int i = 0; i < size; ++i){
+        cin >> b[i];
+    }
 }
 
 
@@ -238,9 +264,11 @@ int main(){
     vector<double> x, b;
     vector<vector<double>> vec;
     double accuracy = 0.001;
+    int size = size_init();
 
-    matrix_init(A);
-    vector_init(b);
+    matrix_init(A, size);
+    vector_init(b, size);
+    cin >> accuracy;
     print_statement(A, b, accuracy);
 
     //itterations:

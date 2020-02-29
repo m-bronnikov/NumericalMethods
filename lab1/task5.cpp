@@ -43,7 +43,7 @@ void bye(){
     cout << "============================================================" << endl;
 }
 
-
+/*
 void matrix_init(Matrix& A){
     A = Matrix(3, 3);
     A[0][0] = -4.0;
@@ -58,6 +58,23 @@ void matrix_init(Matrix& A){
     A[2][1] = 2.0;
     A[2][2] = 5.0;
 }
+*/
+
+int size_init(){
+    int size;
+    cin >> size;
+    return size;
+}
+
+void matrix_init(Matrix& A, int size){
+    A = Matrix(size, size);
+    for(int i = 0; i < size; ++i){
+        for(int j = 0; j < size; ++j){
+            cin >> A[i][j];
+        }
+    }
+}
+
 
 
 void print_vector_x(const vector<pair<double, double>>& x){
@@ -221,8 +238,9 @@ int main(){
     Matrix A;
     vector<pair<double, double>> x;
     double accuracy = 0.01;
-
-    matrix_init(A);
+    int size = size_init();
+    matrix_init(A, size);
+    cin >> accuracy;
     print_statement(A, accuracy);
     
     //QR:

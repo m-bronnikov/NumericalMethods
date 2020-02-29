@@ -106,6 +106,7 @@ void bye(){
     cout << "============================================================" << endl;
 }
 
+/*
 void matrix_init(Matrix& A){
     A = Matrix(4, 4);
     A[0][0] = -1.0;
@@ -125,13 +126,38 @@ void matrix_init(Matrix& A){
     A[3][2] = 5.0;
     A[3][3] = -9.0;
 }
+*/
 
+int size_init(){
+    int size;
+    cin >> size;
+    return size;
+}
+
+void matrix_init(Matrix& A, int size){
+    A = Matrix(size, size);
+    for(int i = 0; i < size; ++i){
+        for(int j = 0; j < size; ++j){
+            cin >> A[i][j];
+        }
+    }
+}
+
+/*
 void vector_init(vector<double>& b){
     b.resize(4);
     b[0] = -12.0;
     b[1] = -60.0;
     b[2] = -91.0;
     b[3] = -43.0;
+}
+*/
+
+void vector_init(vector<double>& b, int size){
+    b.resize(size);
+    for(int i = 0; i < size; ++i){
+        cin >> b[i];
+    }
 }
 
 void print_vector_x(const vector<double>& x){
@@ -183,8 +209,9 @@ int main(){
     ave();
     Matrix L, U, B, A;
     vector<double> b, x;
-    matrix_init(A);
-    vector_init(b);
+    int size = size_init();
+    matrix_init(A, size);
+    vector_init(b, size);
     print_statement(A, b);
 
     // Main function use:
