@@ -16,7 +16,7 @@ void compute_solution(const Matrix& U, const Matrix& L, const vector<double>& b,
     for(int i = 0; i < L.get_m(); ++i){
         z[i] = b[i];
         for(int j = 0; j < i; ++j){
-            z[i] -= (L[j][i] * z[j]);
+            z[i] -= (L[i][j] * z[j]);
         }
     }
     
@@ -37,12 +37,9 @@ double gauss_completely(const Matrix& matrix, Matrix& L, Matrix& U, Matrix& X, c
         throw "LU not exist! Try simple gauss method or enter lines in another order!";
     }
     // init:
-    Matrix B(matrix.get_n(), matrix.get_m());
-    B.make_ones();
     U = matrix;
     L = Matrix(matrix.get_n(), matrix.get_m());
     X = Matrix(matrix.get_n(), matrix.get_m());
-    vector<double> b_1 = b;
     double determinant = 1.0;
 
     // First Gauss steps (compute L and U):
@@ -58,22 +55,18 @@ double gauss_completely(const Matrix& matrix, Matrix& L, Matrix& U, Matrix& X, c
             for(int k = j; k < U.get_m(); ++k){
                 U[i][k] -= U[j][k] * l_ij;
             }
-            // B matrix change for Back matrix compute:
-            for(int k = 0; k < B.get_m(); ++k){
-                B[i][k] -= B[j][k] * l_ij;
-            }
-            // B[i] - B[j]
-            b_1[i] -= b_1[j] * l_ij;
         }
     }
 
     // Compute solution:
-    compute_solution(U, L, b_1, x);
+    compute_solution(U, L, b, x);
 
     // Compute back matrix like compute sol:
-    B.transpose();
-    for(int i = 0; i < B.get_n(); ++i){
-        compute_solution(U, L, B[i], X[i]);
+    vector<double> b_1(b.size());
+    for(int i = 0; i < U.get_n(); ++i){
+        b_1[i] = 1.0;
+        compute_solution(U, L, b_1, X[i]);
+        b_1[i] = 0.0;
     }
     X.transpose();
 
