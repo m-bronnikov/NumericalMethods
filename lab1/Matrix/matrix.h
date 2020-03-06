@@ -33,7 +33,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 
-    double get_norm();
+    double get_norm() const;
+    double get_upper_norm() const;
     
     int get_n() const;
     int get_m() const;

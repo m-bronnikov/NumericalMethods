@@ -176,7 +176,7 @@ int simple_itteration(const Matrix& A, const vector<double>& b, vector<double>& 
     Matrix M = A;
     x.resize(b.size());
     vector<double> last(b.size(), 0.0), r = b;
-    //double coeff = 0.0;
+    double coeff = 0.0;
 
     // commpute new matrix alfa and vector beta
     if(!M.is_quadratic()){
@@ -193,16 +193,18 @@ int simple_itteration(const Matrix& A, const vector<double>& b, vector<double>& 
     }
 
     x = r;
-    /*
     coeff = M.get_norm();
-    coeff /= 1 - coeff;
-    */
+    if(coeff < 1.0){
+        coeff /= 1 - coeff;
+    }else{
+        coeff = 1.0;
+    }
 
     /* MAKE ITTERATIONS HERE: */
 
     int itter = 0;
 
-    for(itter = 0; norm_of_vector(vector_minus(x, last)) > alfa; ++itter){
+    for(itter = 0; coeff * norm_of_vector(vector_minus(x, last)) > alfa; ++itter){
         x.swap(last);
         x = vector_plus(r, M * last);
     }
@@ -214,7 +216,7 @@ int zeidels_method(const Matrix& A, const vector<double>& b, vector<double>& x, 
     Matrix M = A;
     x.resize(b.size());
     vector<double> last(b.size(), 0.0), r = b;
-    // double coeff = 0.0;
+    double coeff = 0.0;
 
     // commpute new matrix alfa and vector beta
     if(!M.is_quadratic()){
@@ -231,10 +233,15 @@ int zeidels_method(const Matrix& A, const vector<double>& b, vector<double>& x, 
     }
 
     x = r;
-    /*
+
     coeff = M.get_norm();
-    coeff /= 1 - coeff;
-    */
+    if(coeff < 1){
+        coeff = M.get_upper_norm() / (1 - coeff);
+    }else{
+        coeff = 1.0;
+    }
+    
+    coeff /= 1 - M.get_norm();
 
     /* MAKE ITTERATIONS HERE: */
 

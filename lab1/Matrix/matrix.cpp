@@ -156,17 +156,6 @@ Matrix::Matrix(int n, int m){
 }
 
 
-double Matrix::get_norm(){
-    double ans = 0.0;
-    for(int i = 0; i < n_size; ++i){
-        for(int j = 0; j < m_size; ++j){
-            ans += _matrix[i][j] * _matrix[i][j];
-        }
-    }
-    return sqrt(ans);
-}
-
-
 bool Matrix::is_quadratic() const{
     return n_size == m_size;
 }
@@ -198,4 +187,28 @@ bool Matrix::is_simmetric() const{
         }
     }
     return true;
+}
+
+double Matrix::get_norm() const{
+    double max = 0.0;
+    for(int i = 0; i < n_size; ++i){
+        double ans = 0.0;
+        for(int j = 0; j < m_size; ++j){
+            ans += abs(_matrix[i][j]);
+        }
+        max = max > ans ? max : ans;
+    }
+    return max;
+}
+
+double Matrix::get_upper_norm() const{
+    double max = 0.0;
+    for(int i = 0; i < n_size; ++i){
+        double ans = 0.0;
+        for(int j = 0; j <= i; ++j){
+            ans += abs(_matrix[i][j]);
+        }
+        max = max > ans ? max : ans;
+    }
+    return max;
 }
