@@ -8,7 +8,7 @@
 
 [Laboratory work №1](lab1) --- *READY*
 
-[Laboratory work №2](lab2) --- *NOT READY YET*
+[Laboratory work №2](lab2) --- *ALMOST READY*
 
 [Laboratory work №3](lab3) --- *NOT READY YET*
 

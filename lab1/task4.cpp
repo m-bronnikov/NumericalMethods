@@ -168,6 +168,31 @@ int rotate_method(const Matrix& A, Matrix& U, vector<double>& x, double alfa){
         x[i] = A_k[i][i];
     }
 
+    /*CHECK*/
+    /*
+    Matrix X = U;
+    X.transpose();
+    cout << "CHECK STARTING:" << endl;
+    for(int i = 0; i < X.get_m(); ++i){
+        cout << "CHECK #" << i + 1 << endl;
+        cout << "A * x" << i + 1  << ": " << endl;
+        vector<double> mult_left = A * X[i];
+        for(unsigned j = 0; j < mult_left.size(); ++j){
+            cout.width(8);
+            cout << mult_left[j] << endl;
+        }
+        cout << endl;
+        cout << "x" << i + 1 << " * l1: " << endl;
+        for(unsigned j = 0; j < X[i].size(); ++j){
+            cout.width(8);
+            cout << X[i][j] * x[i] << endl;
+        }
+        cout << endl;
+    }
+    cout << "END OF CHECK" << endl;
+    */
+    /*END CHECK*/
+
     return itter;
 }
 
