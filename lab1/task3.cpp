@@ -241,7 +241,7 @@ int zeidels_method(const Matrix& A, const vector<double>& b, vector<double>& x, 
         coeff = 1.0;
     }
     
-    coeff /= 1 - M.get_norm();
+    // coeff /= 1 - M.get_norm();
 
     /* MAKE ITTERATIONS HERE: */
 
