@@ -6,6 +6,10 @@
 using namespace std;
 
 const double epsilon = 0.001;
+const double delta = 5.0;
+const double min_d = 0.05;
+
+double dfitta_dx(double x);
 
 void ave(){
     cout << "============================================================" << endl;
@@ -43,7 +47,7 @@ void print_statement(double alfa, double x0){
 }
 
 
-void print_solution(double x_n, int itter_n, double x_i, int itter_i){
+void print_solution(double x_n, int itter_n, double x_i, int itter_i, double a, double b){
     cout << "============================================================" << endl;
     cout << "|                      ANSWER:                             |" << endl;
     cout << "============================================================" << endl;
@@ -56,8 +60,25 @@ void print_solution(double x_n, int itter_n, double x_i, int itter_i){
     cout << "============================================================" << endl;
     cout << "x = " << x_i << endl;
     cout << "Itterations: " << itter_i << endl;
+    cout << "x0 in [" << a << ", " << b << "]" << endl;
     cout << "============================================================" << endl;
 }
+
+double get_sup(double a, double b){
+    double F1, F2;
+    while(abs(b - a) >= epsilon){
+        double x = (a + b) / 2.0; 
+        F2 = dfitta_dx(x + epsilon);
+        F1 = dfitta_dx(x - epsilon);
+        if(F1 < F2){
+            a = x;
+        }else{
+            b = x;
+        }
+    }
+    return dfitta_dx((b + a) / 2.0);
+}
+
 
 
 
@@ -85,9 +106,19 @@ double dfitta_dx(double x){
     return (1.0 - 2.0*x) / (3.0 * pow(0.5 + x - x*x, 2.0 / 3.0));
 }
 
-bool itteration_condition(double x0){
-    return abs(dfitta_dx(x0)) < 1;
-    //return true;
+bool itteration_condition(double x0, double& a, double& b){
+    double d = delta;
+    a = x0 - d;
+    b = x0 + d;
+    while(d > min_d){
+        if(get_sup(a, b) < 1){
+            return true;
+        }
+        d /= 2.0;
+        a = x0 - d;
+        b = x0 + d;
+    }
+    return false;
 }
 
 double newton_method(double x0, double alfa, int& itter){
@@ -101,29 +132,22 @@ double newton_method(double x0, double alfa, int& itter){
     return x_k;
 }
 
-double get_sup(double a, double b){
-    double F_p, F_m;
-    double x = (a + b) / 2; 
-    while(abs(b - a) >= epsilon){
-        F_p = fitta(x + epsilon);
-        F_m = fitta(x - epsilon);
-        
-    }
-}
-
-double itteration_method(double x0, double alfa, int& itter){
+double itteration_method(double x0, double alfa, int& itter, double a, double b){
     double x_j, x_k = x0;
+    double q = get_sup(a, b);
+    q /= (1 - q);
     itter = 0;
     do{
         x_j = x_k;
         x_k = fitta(x_j);
         ++itter;
-    }while(abs(x_k - x_j) >= alfa);
+    }while(q * abs(x_k - x_j) >= alfa);
     return x_k;
 }
 
 int main(){
     double x0, alfa, x_n, x_i;
+    double a, b;
     int itter_n, itter_i;
 
     ave();
@@ -136,16 +160,16 @@ int main(){
         bye();
         return 0;
     }
-    if(!itteration_condition(x0)){
+    if(!itteration_condition(x0, a, b)){
         cout << "Wrong x0 for simmple itteration method. Please try to choice another x0." << endl;
         bye();
         return 0;
     }
 
     x_n = newton_method(x0, alfa, itter_n);
-    x_i = itteration_method(x0, alfa, itter_i);
+    x_i = itteration_method(x0, alfa, itter_i, a, b);
 
-    print_solution(x_n, itter_n, x_i, itter_i);
+    print_solution(x_n, itter_n, x_i, itter_i, a, b);
     bye();
     return 0;
 }
