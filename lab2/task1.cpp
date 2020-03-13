@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const double epsilon = 0.001;
+
 void ave(){
     cout << "============================================================" << endl;
     cout << "|                    LABORATORY WORK №2                    |" << endl;
@@ -97,6 +99,16 @@ double newton_method(double x0, double alfa, int& itter){
         ++itter;
     }while(abs(x_k - x_j) >= alfa);
     return x_k;
+}
+
+double get_sup(double a, double b){
+    double F_p, F_m;
+    double x = (a + b) / 2; 
+    while(abs(b - a) >= epsilon){
+        F_p = fitta(x + epsilon);
+        F_m = fitta(x - epsilon);
+        
+    }
 }
 
 double itteration_method(double x0, double alfa, int& itter){

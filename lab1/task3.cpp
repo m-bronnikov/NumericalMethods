@@ -247,7 +247,7 @@ int zeidels_method(const Matrix& A, const vector<double>& b, vector<double>& x, 
 
     int itter = 0;
 
-    for(itter = 0; norm_of_vector(vector_minus(x, last)) > alfa; ++itter){
+    for(itter = 0; coeff * norm_of_vector(vector_minus(x, last)) > alfa; ++itter){
         x.swap(last);
         x = r;
         for(int i = 0; i < M.get_n(); ++i){
