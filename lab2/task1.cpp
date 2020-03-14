@@ -64,6 +64,8 @@ void print_solution(double x_n, int itter_n, double x_i, int itter_i, double a, 
     cout << "============================================================" << endl;
 }
 
+
+// dihotomy methood for search supr:
 double get_sup(double a, double b){
     double F1, F2;
     while(abs(b - a) >= epsilon){
@@ -106,6 +108,8 @@ double dfitta_dx(double x){
     return (1.0 - 2.0*x) / (3.0 * pow(0.5 + x - x*x, 2.0 / 3.0));
 }
 
+
+// Method searc [a, b] where true condition 
 bool itteration_condition(double x0, double& a, double& b){
     double d = delta;
     a = x0 - d;
@@ -134,8 +138,10 @@ double newton_method(double x0, double alfa, int& itter){
 
 double itteration_method(double x0, double alfa, int& itter, double a, double b){
     double x_j, x_k = x0;
+    // search q here:
     double q = get_sup(a, b);
     q /= (1 - q);
+
     itter = 0;
     do{
         x_j = x_k;
@@ -155,11 +161,14 @@ int main(){
     cin >> x0;
     print_statement(alfa, x0);
 
+    // Check conditions for x0:
     if(!newton_condition(x0)){
         cout << "Wrong x0 for Newton method. Please try to choice another x0." << endl;
         bye();
         return 0;
     }
+
+    // [a, b] - set of points where good solutions
     if(!itteration_condition(x0, a, b)){
         cout << "Wrong x0 for simmple itteration method. Please try to choice another x0." << endl;
         bye();
