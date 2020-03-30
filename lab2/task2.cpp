@@ -9,6 +9,9 @@ using namespace std;
 // params:
 const double a = 1.0; // 4 variant
 const int n = 2; // 2 variables in equation
+const double start_delta = 0.2;
+const double min_delta = 0.01;
+const double search_step = 0.01;
 
 void ave(){
     cout << "============================================================" << endl;
@@ -53,7 +56,7 @@ void print_statement(double alfa, const vector<double>& x0){
 }
 
 
-void print_solution(const vector<double>& x_n, int itter_n, const vector<double>& x_i, int itter_i){
+void print_solution(const vector<double>& x_n, int itter_n, const vector<double>& x_i, int itter_i, const double q){
     cout << "============================================================" << endl;
     cout << "|                      ANSWER:                             |" << endl;
     cout << "============================================================" << endl;
@@ -68,6 +71,11 @@ void print_solution(const vector<double>& x_n, int itter_n, const vector<double>
     cout << "============================================================" << endl;
     cout << "|               SIMPLE ITTERATIONS METHOD:                 |" << endl;
     cout << "============================================================" << endl;
+    if(q >= 1.0){
+        cout << "Sufficient condition not done!" << endl;
+    }else{
+        cout << "Sufficient condition done with q: " << q << endl;
+    }
     cout << "x = (" << x_i[0];
     for(int i = 1; i < n; ++i){
         cout << ", " << x_i[i];
@@ -179,8 +187,24 @@ double fitta1(const vector<double>& x){
     return cos(x[1]) + 1.0;
 }
 
+double dfitta1_dx1(const vector<double>& x){
+    return 0.0;
+}
+
+double dfitta1_dx2(const vector<double>& x){
+    return -sin(x[1]);
+}
+
 double fitta2(const vector<double>& x){
     return log10(x[0] + 1.0) + a;
+}
+
+double dfitta2_dx1(const vector<double>& x){
+    return 1.0 / ((x[0] + 1) * log(10));
+}
+
+double dfitta2_dx2(const vector<double>& x){
+    return 0.0;
 }
 
 
@@ -192,9 +216,16 @@ void set_matrix(Matrix& A, const vector<double>& x){
     A[1][1] = df2_dx2(x);
 }
 
+void set_dfitta_matrix(Matrix& A, const vector<double>& x){
+    A = Matrix(n, n);
+    A[0][0] = dfitta1_dx1(x);
+    A[0][1] = dfitta1_dx2(x);
+    A[1][0] = dfitta2_dx1(x);
+    A[1][1] = dfitta2_dx2(x);
+}
+
 void set_vector(vector<double>& fx, const vector<double>& x){
     fx.resize(n);
-    cout << x.size() << endl;
     fx[0] = -f1(x);
     fx[1] = -f2(x);
 }
@@ -227,10 +258,42 @@ int newton_method(const vector<double>& x0, vector<double>& x, double alfa){
     return itter;
 }
 
-int itteration_method(const vector<double>& x0, vector<double>& x, double alfa){
+double find_q(const vector<double>& x0){
+    double delta = start_delta * 2.0;
+    vector<double> ans_x = x0;
+    Matrix Dfitta;
+    double ans;
+    do{
+        delta /= 2.0;
+        // search x with max norm
+        for(unsigned i = 0; i < x0.size(); ++i){
+            double maximum = 0.0;
+            vector<double> x = x0;
+            for(double v = x0[i] - delta; v <= x0[i] + delta; v += search_step){
+                x[i] = v;
+                set_dfitta_matrix(Dfitta, x);
+                double norm = Dfitta.get_norm();
+                if(norm > maximum){
+                    ans_x[i] = v;
+                    maximum = norm;
+                }
+            }
+        }
+        set_dfitta_matrix(Dfitta, ans_x); 
+        ans = Dfitta.get_norm();
+    }while(ans >= 1.0 && delta >= min_delta);
+    return ans;
+}
+
+int itteration_method(const vector<double>& x0, vector<double>& x, double alfa, double& q){
     int itter = 0;
     vector<double> x_i;
     vector<double> fx, dx;
+    q = find_q(x0);
+    if(q < 1.0){
+        alfa *= (1.0 - q);
+        alfa /= q;
+    }
     x = x0;
     do{
         x_i.swap(x);
@@ -241,8 +304,9 @@ int itteration_method(const vector<double>& x0, vector<double>& x, double alfa){
 }
 
 int main(){
+    ave();
     vector<double> x0(n), x_n(n), x_i(n, 0);
-    double alfa;
+    double alfa, q;
     int itter_n, itter_i = 0;
     // read accuracy and x0:
     cin >> alfa;
@@ -252,9 +316,9 @@ int main(){
     print_statement(alfa, x0);
 
     itter_n = newton_method(x0, x_n, alfa);
-    itter_i = itteration_method(x0, x_i, alfa);
+    itter_i = itteration_method(x0, x_i, alfa, q);
 
-    print_solution(x_n, itter_n, x_i, itter_i);
+    print_solution(x_n, itter_n, x_i, itter_i, q);
     bye();
     return 0;
 }

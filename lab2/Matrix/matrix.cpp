@@ -155,16 +155,18 @@ Matrix::Matrix(int n, int m){
     m_size = m;
 }
 
-
-double Matrix::get_norm(){
-    double ans = 0.0;
+double Matrix::get_norm() const{
+    double max = 0.0;
     for(int i = 0; i < n_size; ++i){
+        double ans = 0.0;
         for(int j = 0; j < m_size; ++j){
-            ans += _matrix[i][j] * _matrix[i][j];
+            ans += abs(_matrix[i][j]);
         }
+        max = max > ans ? max : ans;
     }
-    return sqrt(ans);
+    return max;
 }
+
 
 
 bool Matrix::is_quadratic() const{

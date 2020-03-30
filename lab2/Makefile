@@ -16,4 +16,4 @@ matrix.o: Matrix/matrix.cpp
 
 
 clean:
-	rm -rf *.o task1 task2 Matrix/matrix.o
+	rm -rf *.o task1 task2 Matrix/matrix.o .ipynb_checkpoints
