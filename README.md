@@ -12,7 +12,7 @@
 
 [Laboratory work №3](lab3) --- *READY*
 
-[Laboratory work №4](lab4) --- *NOT READY YET*
+[Laboratory work №4](lab4) --- *READY*
 
 
 ##### <center> Made by Max Bronnikov </center>
