@@ -1,10 +1,12 @@
 # Numerical Methods
-## Laboratory works on Numerical Methods 3 course
+
+
+## Laboratory works 
 
 ### Variant №4
 
 
-#### Solutions
+#### Solutions with tasks
 
 [Laboratory work №1](lab1) --- *READY*
 
@@ -13,6 +15,15 @@
 [Laboratory work №3](lab3) --- *READY*
 
 [Laboratory work №4](lab4) --- *READY*
+
+
+## Course project
+
+### Variant № 3
+
+#### Solution with task
+
+[Course Project](KP) --- *NOT READY YET*
 
 
 ##### <center> Made by Max Bronnikov </center>
