@@ -25,5 +25,7 @@
 
 [Course Project](KP) --- *NOT READY YET*
 
+-------
+
 
 ##### <center> Made by Max Bronnikov </center>
