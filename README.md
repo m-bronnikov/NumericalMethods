@@ -23,7 +23,7 @@
 
 #### Solution with task
 
-[Course Project](KP) --- *NOT READY YET*
+[Course Project](KP) --- *READY*
 
 -------
 
