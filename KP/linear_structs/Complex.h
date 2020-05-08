@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define EPSILON 0.000000000000001
+#define EPSILON 0.00000000000001
 
 typedef struct Complex{
     double re;
@@ -12,14 +12,14 @@ typedef struct Complex{
 }Complex;
 
 Complex complex_num(){
-    return {0.0, 0.0};
+    Complex ans;
+    ans.re = ans.im = 0.0;
+    return ans;
 }
 
 void print_complex(Complex number){
-    if(abs(number.re) > EPSILON){
-        printf("%lg", number.re);
-    }
-    if(abs(number.im) > EPSILON){
+    printf("%lg", number.re);
+    if(fabs(number.im) > EPSILON){
         if(number.im > 0.0){
             printf("+");
         }
@@ -32,15 +32,24 @@ double modulo_complex(Complex number){
 }
 
 Complex multiply_complex(Complex z1, Complex z2){
-    return {z1.re*z2.re - z1.im*z2.im, z1.re*z2.im + z2.re*z1.im};
+    Complex ans;
+    ans.re = z1.re*z2.re - z1.im*z2.im;
+    ans.im = z1.re*z2.im + z2.re*z1.im;
+    return ans;
 }
 
 Complex plus_complex(Complex z1, Complex z2){
-    return {z1.re + z2.im, z1.im + z2.im};
+    Complex ans;
+    ans.re = z1.re + z2.im;
+    ans.im = z1.im + z2.im;
+    return ans;
 }
 
 Complex minus_complex(Complex z1, Complex z2){
-    return {z1.re - z2.im, z1.im - z2.im};
+    Complex ans;
+    ans.re = z1.re - z2.im;
+    ans.im = z1.im - z2.im;
+    return ans;
 }
 
 void quadrat_solver_first(double a, double b, double c, Complex* ans1, Complex* ans2){
