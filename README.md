@@ -1,12 +1,12 @@
 # Numerical Methods
 
 
-## Laboratory works 
-
-### Variant №4
+## Solutions
 
 
-#### Solutions with tasks
+### Semestr №1
+
+#### Variant №4
 
 [Laboratory work №1](lab1) --- *READY*
 
@@ -17,11 +17,22 @@
 [Laboratory work №4](lab4) --- *READY*
 
 
-## Course project
+### Semestr №2
 
-### Variant № 3
+#### Variant №4
 
-#### Solution with task
+[Laboratory work №5](lab5) --- *READY*
+
+[Laboratory work №6](lab6) --- *READY*
+
+[Laboratory work №7](lab7) --- *READY*
+
+[Laboratory work №8](lab8) --- *READY*
+
+### Course project
+
+#### Variant № 3
+
 
 [Course Project](KP) --- *READY*
 
